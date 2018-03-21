@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮播效果</title>
+    <style>
+        *{margin:0px; padding:0px;}
+        ul{
+            position:absolute;
+            list-style:none;
+        }
+        ul li{
+            float:left;
+            position:relative;
+        }
+        #box1{
+            /*让图片跟着box走*/
+            position:relative;
+            overflow:hidden;
+            width:300px;
+            height:200px;
+        }
+        #box2{
+            margin-top:50px;
+            position:relative;
+            overflow:hidden;
+            width:300px;
+            height:200px;
+        }
+        #box3{
+            margin-top:50px;
+            position:relative;
+            overflow:hidden;
+            width:300px;
+            height:200px;
+        }
+        #nums{
+            position:absolute;
+            right:20px;
+            bottom:20px;
+        }
+        #nums .active{
+            opacity:1;
+            background:orange;
+        }
+        /*这里要注意覆盖的优先度问题！*/
+        #nums span{
+            width:20px;
+            height:20px;
+            line-height:20px;
+            text-align: center;
+            display:block;
+            float:left;
+            background:grey;
+            color:white;
+            opacity:0.7;
+            margin:0px 5px;
+        }
+        #arrows span{
+            float:left;
+            position:absolute;
+            width:20px;
+            height:40px;
+            line-height:40px;
+            text-align: center;
+            display:block;
+            background:grey;
+            color:white;
+            opacity:0.7;
+        }
+        #arrows .leftBtn{
+            left:0px;
+            top:80px;
+        }
+        #arrows .rightBtn{
+            left:280px;
+            top:80px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box1">
+    <ul>
+        <li><img src="imgs/1.jpg"></li>
+        <li><img src="imgs/2.jpg"></li>
+        <li><img src="imgs/3.jpg"></li>
+        <li><img src="imgs/4.jpg"></li>
+        <li><img src="imgs/5.jpg"></li>
+        <li><img src="imgs/6.jpg"></li>
+    </ul>
+</div>
+<div id="box2">
+    <ul>
+        <li><img src="imgs/1.jpg"></li>
+        <li><img src="imgs/2.jpg"></li>
+        <li><img src="imgs/3.jpg"></li>
+        <li><img src="imgs/4.jpg"></li>
+        <li><img src="imgs/5.jpg"></li>
+        <li><img src="imgs/6.jpg"></li>
+    </ul>
+</div>
+<div id="box3">
+    <ul>
+        <li><img src="imgs/1.jpg"></li>
+        <li><img src="imgs/2.jpg"></li>
+        <li><img src="imgs/3.jpg"></li>
+        <li><img src="imgs/4.jpg"></li>
+        <li><img src="imgs/5.jpg"></li>
+        <li><img src="imgs/6.jpg"></li>
+    </ul>
+</div>
+
+
+<script src="jquery.min.js"></script>
+<script src="jquery.picSwitch.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#box1").picSwitch();
+
+        $("#box2").picSwitch({
+            numControl:true,
+            speed:2000
+        });
+
+        $("#box3").picSwitch({
+            arrowControl:true
+        });
+    })
+
+</script>
+
+</body>
+</html>
