@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <style>
+        *{margin:0;padding:0;}
+        label{
+            width:80px;
+            display:inline-block;
+        }
+        #box{
+            width:500px;
+            margin:100px auto;
+        }
+        input{
+            margin:7px 0;
+        }
+        span{
+            height:15px;
+            line-height:15px;
+            font-size:10px;
+            color:grey;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <form method = "post" action="register.php">
+        <label for="userName">用 户 名：</label>
+        <input id="userName" type="text" name="usn">
+        <br /><span id="nameErr">*请输入6-12位的用户名。</span><br />
+
+        <label for="pwd">密 &emsp; 码：</label>
+        <input id="pwd" type="password" name="pwd"><br />
+
+        <label for="repwd">重复密码：</label>
+        <input id="repwd" type="password" name="repwd"><br />
+
+        <label for="mail">邮 &emsp; 箱：</label>
+        <input id="mail" type="text" name="mail"><br />
+
+        <input type="radio" name="gender" checked="checked" value="male">男
+        <input type="radio" name="gender" value="male">女<br />
+
+        <label for="tel">手机号码：</label>
+        <input id="tel" type="text" name="tel"><br />
+
+        <input type="submit" value="提交数据">
+    </form>
+</div>
+
+
+<script src="ajaxRun.js"></script>
+<script type="text/javascript">
+var regName = /^\w{6,12}$/;
+
+var usn = document.getElementById("userName"),
+    usnErr = document.getElementById("nameErr"),
+
+usn.onkeyup = function(){
+    if(regName.test(usn.value)){
+
+        ajaxRun({
+            method:"post",
+            url:"register.php",
+            data:{
+                usn:usn.value,
+            },
+            async:true,
+            success:function(data){
+                if(data){
+                    usnErr.innerHTML = "该账号尚未注册";
+                    usnErr.style.color = "green";
+                }else{
+                    usnErr.innerHTML = "该账号已被注册";
+                    usnErr.style.color = "red";
+                }
+            }
+        });
+    }else{
+        usnErr.innerHTML = "您输入的账号格式有误";
+        usnErr.style.color = "red";
+    }
+};
+
+
+
+</script>
+
+</body>
+</html>
