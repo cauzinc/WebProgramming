@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>链式运动</title>
+    <style>
+        *{margin:0; padding:0;}
+        #box{
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:200px;
+            height:200px;
+            background:blue;
+            opacity:0.3;
+            filter:alpha(opacity:30);
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    //回调函数，重新调用自身，但是此时注意，第四个参数不可以直接调用animate，因为animate函数中调用fn时，并没有带上任何参数
+    box.onmouseover = function(){
+        animate(this,600,"left",function(){
+            animate(this,600,"top",function(){
+                animate(this,0,"left",function(){
+                    animate(this,0,"top");
+                })
+            })
+        });
+    }
+
+    function animate(dom,target,attr,fn){
+        clearInterval(dom.timer);
+        dom.timer = setInterval(function(){
+            var domAttr = parseFloat(getAttr(dom,attr));
+            if(attr == "opacity"){
+                domAttr *= 100;
+            }
+            var speed = (target - domAttr)/10;
+            if(target>domAttr){
+                speed = Math.ceil(speed);
+            }else{
+                speed = Math.floor(speed);
+            }
+            if(target == domAttr){
+                clearInterval(dom.timer);
+                //进行判断，当没有第四个参数，即不需要回调函数时，则不执行
+                if(fn){
+                    //当重复调用时，this的指向会改变，因此要在dom的作用域下调用fn函数才不会出错
+                    fn.call(dom);
+                }
+            }else{
+                if(attr=="opacity"){
+                    dom.style[attr] = (domAttr + speed)/100;
+                    dom.style.filter = "alpha(opacity:"+(domAttr + speed)+");"
+                }else{
+                    dom.style[attr] = domAttr + speed +"px";
+                }
+
+            }
+
+        },30);
+    }
+
+    function getAttr(dom,attr){
+        if(dom.currentStyle){
+            return dom.currentStyle[attr];
+        }else{
+            return getComputedStyle(dom,null)[attr];
+        }
+    }
+
+</script>
+
+</body>
+</html>

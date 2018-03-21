@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>缓冲运动</title>
+    <style>
+        *{margin:0px; padding:0px;}
+        #box{
+            position:absolute;
+            width:200px;
+            height:200px;
+            top:0px;
+            left:0px;
+            background:pink;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+
+<script type="text/javascript">
+    var box = document.getElementById("box"),
+        timer = null;
+
+    box.onmouseover = function(){
+        animate(this,500);
+    }
+    box.onmouseout = function(){
+        animate(this,0);
+    }
+
+    function animate(dom,target){
+        var speed = 0;
+        clearInterval(timer);
+        timer = setInterval(function(){
+            if(dom.offsetLeft<target){
+                speed = (target-dom.offsetLeft)/10;
+                speed = Math.ceil(speed);   //由于像素没有小数点，所以这里对speed取整，不使用floor的原因是，floor会去除小数但不进位，导致最后box停止运动
+
+            }else{
+                speed = (target-dom.offsetLeft)/10;
+                speed = Math.floor(speed);  //这里要使用floor，因为speed为负数，进一会导致速度从-1变为0
+            }
+            if(dom.offsetLeft == target){
+                clearInterval(timer);
+            }else{
+                dom.style.left = dom.offsetLeft + speed +"px";
+            }
+        },30)
+    }
+
+</script>
+
+</body>
+</html>

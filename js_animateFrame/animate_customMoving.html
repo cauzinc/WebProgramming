@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任意值运动</title>
+    <style>
+        *{margin:0; padding:0;}
+        #box{
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:200px;
+            height:200px;
+            background:blue;
+            opacity:0.3;
+            fliter:alpha(opacity:30);
+        }
+    </style>
+
+</head>
+<body>
+<div id="box"></div>
+
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+
+    box.onmouseover = function(){
+        animate(this,100,"opacity");
+    }
+    box.onmouseout = function(){
+        animate(this,30,"opacity");
+    }
+
+    function animate(dom,target,attr){
+        clearInterval(dom.timer);
+        console.log(dom.style[attr]);
+        dom.timer = setInterval(function(){
+            var tarAttr = getAttr(dom,attr);
+            if(attr == "opacity"){
+                tarAttr*=100;
+            }
+            tarAttr = parseFloat(tarAttr);
+            var speed = (target-tarAttr)/10;
+
+
+            if(tarAttr<target){
+                speed = Math.ceil(speed);
+            }else{
+                speed = Math.floor(speed);
+            }
+            if(tarAttr == target){
+                clearInterval(dom.timer);
+            }else{
+                if(attr == "opacity"){
+                    dom.style[attr] = (tarAttr + speed)/100;
+                    dom.style.filter = "alpha(opacity:"+(tarAttr + speed)+")";
+                }else{
+                    dom.style[attr] = tarAttr + speed + "px";
+                }
+            }
+        },30);
+
+    }
+
+    //写一个函数来返回特定的属性的值，同时要做一下兼容，ie中取得属性值的方法是dom.currentStyle，非ie中的方法是getComputedStyle(dom,null)[attr]；
+    function getAttr(dom,attr){
+        if(dom.currentStyle){
+            return dom.currentStyle[attr];
+        }else{
+            return getComputedStyle(dom,null)[attr];
+        }
+        //注意，返回的不是数值，而是一个字符串，因此记得做一下数据类型转换。
+    }
+
+</script>
+</body>
+</html>

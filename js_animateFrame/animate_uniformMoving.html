@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运动框架--匀速运动</title>
+    <style>
+        *{ margin:0px; padding:0px;}
+        #box{
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:200px;
+            height:200px;
+            background-color:pink;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+
+<script type="text/javascript">
+    var box = document.getElementById("box"),
+        timer = null;
+    box.onmouseover = function(){
+        animate(this,1000);
+    }
+    box.onmouseout = function(){
+        animate(this,0);
+    }
+
+
+   /* function animate(dom,target){
+        var timer = null;
+        if(dom.offsetLeft<target){
+            timer = setInterval(function(){
+                dom.style.left = dom.offsetLeft + 10 +"px";
+            },30);
+        }else{
+            clearInterval(timer);
+        }
+    }
+    不可以这样写的，因为鼠标进入后只会判断一次，于是进行判断left小于target，并不会执行else后面的内容，应该把clearInterval写到setInterval里面
+    */
+    function animate(dom,target){
+        var speed = 0;
+        console.log(dom.style.width);
+        clearInterval(timer);   //必须在再次调用前消除上一个定时器，否则在上一个定时器完成任务前不断移入移出鼠标，会反复给Box执行定时器，从而造成速度混乱
+        timer = setInterval(function(){
+            //如果目标在右边，则速度为正数，如果目标在左边，那么速度为负数
+            //匀速运动时，速度为常量
+            if(dom.offsetLeft<target){
+                speed = 10;
+            }else{
+                speed = -10;
+            }
+            if(dom.offsetLeft == target){
+                clearInterval(timer);
+           }else{
+                dom.style.left = dom.offsetLeft + speed +"px";
+            }
+        },30);
+    }
+</script>
+
+</body>
+</html>

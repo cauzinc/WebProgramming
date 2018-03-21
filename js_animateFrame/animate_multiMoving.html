@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多物体运动</title>
+    <style>
+        *{margin:0; padding:0;}
+        ul{
+           list-style-type:none;
+        }
+        li{
+            width:200px;
+            height:100px;
+            background: purple;
+            margin:10px 0px;
+        }
+
+    </style>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<script type="text/javascript">
+    var lis = document.getElementsByTagName("li");
+
+    for(var i=0; i<lis.length; i++){
+        lis[i].onmouseover = function(){
+            animate(this,600);
+        }
+        lis[i].onmouseout = function(){
+            animate(this,200);
+        }
+
+    }
+
+
+    function animate(dom,target){
+        var speed;
+        clearInterval(dom.timer);
+        //多个物体同时运动时，每个对象都要拥有自己的定时器，而不能共用一个，否则会引起混乱，调用其他对象的函数时，错误地停止定时器
+        //注意这种定义对象的变量的方式
+        dom.timer = setInterval(function(){
+            if(dom.offsetWidth < target){
+                speed = (target - dom.offsetWidth)/10;
+                speed = Math.ceil(speed);
+            }else{
+                speed = (target - dom.offsetWidth)/10;
+                speed = Math.floor(speed);
+            }
+            if(dom.offsetWidth == target){
+                clearInterval(dom.timer);
+            }else{
+                dom.style.width = dom.offsetWidth + speed +"px";
+            }
+        },30);
+
+
+    }
+</script>
+
+</body>
+</html>
