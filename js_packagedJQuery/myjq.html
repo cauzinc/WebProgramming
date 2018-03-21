@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单封装jq</title>
+</head>
+<body>
+
+<div id="box">div</div>
+
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+
+
+<script src="myjq.js"></script>
+<script type="text/javascript">
+
+
+ /*   $("#box").hover(function(){
+       console.log("in");
+    },function(){
+        console.log("out");
+    });*/
+
+ console.log($("ul li").css("background"));
+ $("ul li").first().css("background","red");
+ $("ul li").last().css("background","red");
+ $("ul li").eq(2).css("background","orange");
+console.log($("ul li").css("background"));
+
+</script>
+
+</body>
+</html>
