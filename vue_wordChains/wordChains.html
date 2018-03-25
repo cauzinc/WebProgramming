@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动成语接龙</title>
+    <style>
+        .word{
+            width:200px;
+            height:50px;
+            line-height:50px;
+            background:black;
+            color:white;
+            text-align: center;
+            margin:5px 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <input type="text" @keyup.enter="run"  v-model.trim="text" placeholder="input an English word">
+    <button @click="run">click me</button>
+    <div>
+        <!--
+        1、写下五条组件，第一条组件要从input中接受value，因此设置parentWord的值和text绑定，并且设置ref，以便取得子组件引用，让父组件调用子组件的方法
+        2、每一条都设置自己的on和emit，来确定触发顺序
+        3、这里的On和emit可以再进行一些优化，
+        由于on在每个元素挂载的时候就确定，所以可以用一个for循环，让on等于index；emit等于index+1
+        -->
+        <word-chain :parent-word="text" on="0" emit="1" ref="word1"></word-chain>
+        <word-chain on="1" emit="2"></word-chain>
+        <word-chain on="2" emit="3"></word-chain>
+        <word-chain on="3" emit="4"></word-chain>
+        <word-chain on="4" emit="5"></word-chain>
+    </div>
+</div>
+
+<script src="vue.js"></script>
+<script type="text/javascript">
+
+    //利用一个Vue的实例作为总线，来实现组件之间的事件通信
+    var Vm = new Vue();
+
+    var parent = new Vue({
+        el:'#box',
+        data:{
+            text:''
+        },
+        methods:{
+            run:function(){
+                child1.searchWord();
+            }
+        },
+        components:{
+            wordChain:{
+                props:['parentWord','on','emit'],
+                data:function(){
+                    return{
+                        word:'',
+                        words:['abandon','break','cycle','duck','emit','freak','grand','hero',
+                            'irresponsible','jerk','king','limit','magic','numb','object','pride',
+                            'query','response','slime','trim','utility','vue','wrap','x-ray','yield','zone']
+                    }
+                },
+                mounted:function(){
+                    //由于mounted是一个方法，此时由于闭包，on方法无法直接拿到指向组件对象的this指针，要在闭包外用变量储存this指针
+                    //在组件中使用data取得数据时，也要注意闭包问题
+                    var _this = this;
+                    Vm.$on('triggle'+(_this.on),function(word){
+                        _this.searchWord(word);
+                    });
+                },
+                methods:{
+                    searchWord:function(word){
+                        var letter='';
+                        //如果传入了变量，则使用传入的变量；否则使用来自父组件的parentWord
+                        if(word){
+                            letter = word.substr(-1);
+                        }else{
+                            letter = this.parentWord.substr(-1);
+                        }
+                        for(var i=0; i<this.words.length; i++){
+                            if(letter == this.words[i].charAt(0)){
+                                this.word = this.words[i];
+                                break;
+                            }
+                        }
+                        console.log("triggle"+this.emit);
+                        Vm.$emit('triggle'+this.emit,this.word);
+                    }
+                },
+                template:'<div class="word"><p>{{word}}</p></div>'
+            }
+        }
+    });
+    //利用子组件实例中的ref属性，取得子组件的引用，使得父组件可以直接调用子组件的方法
+    var child1 = parent.$refs.word1;
+
+</script>
+</body>
+</html>
