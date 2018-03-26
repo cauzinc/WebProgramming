@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>clock</title>
+</head>
+<body>
+<canvas id="myCan"></canvas>
+
+<script type="text/javascript">
+
+    var timer = function(){
+        var myCan = document.getElementById("myCan"),
+            cvs = myCan.getContext("2d");
+        myCan.height = 500;
+        myCan.width = 500;
+
+        var x=250,
+            y=250,
+            r=200,
+            pi = Math.PI;
+
+        //画出分针的刻度
+        for(var i=0; i<61; i++){
+            cvs.moveTo(x,y);
+            cvs.arc(x,y,r,i*6*pi/180,(i+1)*6*pi/180);
+            cvs.stroke();
+        }
+
+        cvs.beginPath();
+        cvs.arc(x,y,r-10,0,2*pi);
+        cvs.fillStyle = "white";
+        cvs.fill();
+
+        //画出时针的刻度
+        cvs.beginPath();
+        for(var i=0; i<13; i++){
+            cvs.moveTo(x,y);
+            cvs.arc(x,y,r,i*pi*30/180,(i+1)*pi*30/180);
+            cvs.lineWidth = 3;
+            cvs.stroke();
+        }
+
+        cvs.beginPath();
+        cvs.arc(x,y,r-20,0,2*pi);
+        cvs.fillStyle = "white";
+        cvs.fill();
+
+
+        //秒针、分针、时针
+        var date = new Date(),
+            hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds();
+
+        cvs.beginPath();
+        cvs.moveTo(x,y);
+        cvs.arc(x,y,r-50,(seconds-15)*pi*6/180,(seconds-15)*pi*6/180);
+        cvs.lineWidth=1;
+        cvs.stroke();
+
+        cvs.beginPath();
+        cvs.moveTo(x,y);
+        cvs.arc(x,y,r-50,(minutes-15)*pi*6/180,(minutes-15)*pi*6/180);
+        cvs.lineWidth=3;
+        cvs.stroke();
+
+        cvs.beginPath();
+        cvs.moveTo(x,y);
+        cvs.arc(x,y,r-100,(hours-3+(minutes/60))*pi*30/180,(hours-3+(minutes/60))*pi*30/180);
+        cvs.lineWidth=4;
+        cvs.stroke();
+    }
+
+    timer();
+    setInterval(timer,1000);
+
+</script>
+
+</body>
+</html>
