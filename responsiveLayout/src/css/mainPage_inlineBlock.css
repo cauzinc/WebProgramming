@@ -1,0 +1,353 @@
+*{margin:0; padding:0; }
+html{
+    font-size:62.5%;
+    background:#ffffff;
+    /*使1rem等于10px*/
+}
+ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+body{
+    line-height:1.5;
+    font-size:1.2rem;
+}
+::selection{
+    background:#b3d4fc;
+}
+a{
+    color:#ffffff;
+    text-decoration:none;
+}
+.clearfix{
+    clear:both;
+    display:table;
+    content:"";
+}
+/*-------------------------header-------------------------*/
+header{
+    width:100%;
+    display:flex;
+}
+header #headIcon{
+    float:left;
+    width:15%;
+    opacity:0.5;
+ }
+header #headIcon img{
+    width:8rem;
+    height:8rem;
+    float:right;
+    margin:1rem 0;
+}
+
+header #headLogin{
+    float:right;
+    height:10rem;
+    width:20%;
+}
+header #headLogin span{
+    float:left;
+    margin-top:3rem;
+    height:4rem;
+    width:12rem;
+    line-height:4rem;
+    text-align:center;
+    color:#ffffff;
+    background:orange;
+    border-radius:1rem;
+}
+header nav{
+    flex:1;
+    width:calc(100% - 15% - 20%);
+    line-height:10rem;
+}
+header nav ul{
+    margin:auto 0;
+    float:right;
+
+}
+header nav ul li{
+    margin:0 2rem;
+    display:inline-block;
+    font-size:1.6rem;
+}
+header nav ul li a{
+    color:#666666;
+}
+
+@media only screen and (max-width:50em) {
+    header nav ul li{
+        margin:0 1rem;
+        font-size:1rem;
+    }
+    header #headIcon{
+        width:25%;
+    }
+    header #headLogin{
+        width:30%;
+    }
+}
+@media only screen and (max-width: 40em){
+    header nav ul li{
+        display:none;
+    }
+    header #headLogin{
+        width:50%;
+    }
+}
+
+/*-------------------------main-------------------------*/
+
+#main{
+    width:100%;
+}
+
+#main #banner{
+    width:100%;
+    height:30rem;
+    overflow: hidden;
+}
+#main #banner li{
+    list-style:none;
+    display:inline-block;
+    width:100%;
+    height:30rem;
+}
+#main #banner li img{
+    width:100%;
+    height:30rem;
+}
+
+
+
+#main #columnsTab{
+    width:100rem;
+    margin:0 auto;
+}
+#main #columsTitle ul{
+    list-style:none;
+    width:100rem;
+    height:5rem;
+}
+#main #columsTitle ul li{
+    float:left;
+    font-size:2rem;
+    width: calc(33.33333%);
+    height:5rem;
+    line-height:5rem;
+    text-align:center;
+}
+
+#main #columnsTab #content{
+    width:100rem;
+    height:40rem;
+    overflow:hidden;
+}
+#main #columnsTab #content li{
+    width:10rem;
+    height:40rem;
+    float:left;
+    list-style:none;
+}
+
+#main #columnsTab #content ul{
+    width:100rem;
+    height:40rem;
+}
+#main #columnsTab #content img{
+    width:60rem;
+    height:40rem;
+}
+
+
+#main #news{
+    width:80%;
+    margin:.5rem auto;
+}
+#main #news .title{
+    width:100%;
+    height:5rem;
+    line-height:5rem;
+    font-size:3rem;
+    text-align: center;
+    background:darkred;
+    color:white;
+    text-shadow:2px 2px 1px #666,3px 3px 1px #eee;
+}
+#main #news .content{
+    width:100%;
+    /*height:50rem;*/
+    font-size:0;
+}
+#main #news .content div{
+    display:inline-block;
+    width:calc(100%/3 - 2.5rem);
+    height:20rem;
+    padding:2.5rem 1.25rem;
+}
+#main #news .content div img{
+    width:80%;
+    height:15rem;
+    display: block;
+    margin:0 auto;
+}
+#main #news .content div time{
+    width:100%;
+    height:2.5rem;
+    line-height:2.5rem;
+    font-size:.8rem;
+    color:#666666;
+    display: block;
+    margin-left:10%;
+}
+#main #news .content div span{
+    display:block;
+    width:100%;
+    height:2.5rem;
+    line-height:2.5rem;
+    text-align:center;
+    font-size:1rem;
+    color:#666666;
+}
+
+
+#main #articles{
+    width:80%;
+    margin:.5rem auto;
+}
+#main #articles .title{
+    width:100%;
+    height:5rem;
+    line-height:5rem;
+    font-size:3rem;
+    text-align: center;
+    background:darkred;
+    color:white;
+    text-shadow:2px 2px 1px #666,3px 3px 1px #eee;
+}
+#main #articles .content{
+    width:100%;
+    /*height:50rem;*/
+    font-size:0;
+}
+#main #articles .content div{
+    display:inline-block;
+    width:calc(100%/3 - 2.5rem);
+    height:20rem;
+    padding:2.5rem 1.25rem;
+}
+#main #articles .content div img{
+    width:80%;
+    height:15rem;
+    display: block;
+    margin:0 auto;
+}
+#main #articles .content div time{
+    width:100%;
+    height:2.5rem;
+    line-height:2.5rem;
+    font-size:.8rem;
+    color:#666666;
+    display: block;
+    margin-left:10%;
+}
+#main #articles .content div span{
+    display:block;
+    width:100%;
+    height:2.5rem;
+    line-height:2.5rem;
+    text-align:center;
+    font-size:1rem;
+    color:#666666;
+}
+
+
+@media only screen and (max-width:70em){
+    #main #columnsTab{
+        display:none;
+    }
+    #main #news .content div{
+        width:calc(50% - 1.5rem);
+        display:inline-block;
+        height:20rem;
+        padding:1.5rem 0.75rem;
+    }
+    #main #articles .content div{
+        width:calc(50% - 1.5rem);
+        display:inline-block;
+        height:20rem;
+        padding:1.5rem 0.75rem;
+    }
+}
+
+@media only screen and (max-width:50em) {
+    #main #news .content div {
+        width: calc(100% - 1.5rem);
+        display: inline-block;
+        height: 10rem;
+        padding: 1.5rem 0.75rem;
+    }
+
+    #main #articles .content div {
+        width: calc(100% - 1.5rem);
+        display: inline-block;
+        height: 10rem;
+        padding: 1.5rem 0.75rem;
+
+    }
+}
+/*-------------------------footer-------------------------*/
+footer{
+    width:100%;
+}
+footer #span{
+    width:100%;
+    line-height:3rem;
+    text-align:center;
+    background:#666666;
+    color:white;
+    text-shadow:0 0 10px red;
+}
+
+footer #icons{
+    width: 100%;
+    background:#999999;
+}
+footer  #icons li{
+    list-style:none;
+    float:left;
+}
+footer #icons div{
+    width:50rem;
+    height:8rem;
+    margin:0 auto;
+}
+footer li img{
+    width:5rem;
+    height:5rem;
+    margin:.5rem 2.5rem;
+}
+footer #pageInfo{
+    width:100%;
+    height:3rem;
+    line-height:3rem;
+    text-align:center;
+    background:lightgrey;
+}
+
+
+@media only screen and (max-width:40em){
+    footer #icons div{
+        width:25rem;
+        height:8rem;
+        margin:0 auto;
+    }
+    footer li img{
+        width:3rem;
+        height:3rem;
+        margin:1.5rem 1rem;
+    }
+
+}
