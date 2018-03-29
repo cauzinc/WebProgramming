@@ -120,7 +120,15 @@ header nav ul li a{
     height:30rem;
 }
 
-
+.active{
+    float:left;
+    font-size:2rem;
+    width: calc(33.33333%);
+    height:4.5rem;
+    line-height:4.5rem;
+    text-align:center;
+    border-bottom:0.5rem solid darkred;
+}
 
 #main #columnsTab{
     width:100rem;
@@ -138,6 +146,20 @@ header nav ul li a{
     height:5rem;
     line-height:5rem;
     text-align:center;
+}
+
+
+#main #columnsTab #content div{
+    display:none;
+}
+.conShow{
+    display:block!important;
+}
+
+
+#main #columnsTab #content .activePic{
+    width:60rem;
+    height:40rem;
 }
 
 #main #columnsTab #content{
