@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag layout</title>
+    <style>
+        .container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+        }
+
+        .boxes {
+            width: 1000px;
+            height: 700px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .boxes li {
+            position: relative;
+            float: left;
+            width: 160px;
+            height: 120px;
+            background: skyblue;
+            border-radius: 10px;
+            font-size: 26px;
+            font-weight: bold;
+            line-height: 120px;
+            color: white;
+            text-align: center;
+            margin: 20px 30px;
+        }
+
+        .boxes .add {
+            border: 1px dashed #333;
+            background: #fff;
+            color: #333;
+        }
+
+        .delete-button {
+            display: none;
+            width: 90px;
+            height: 20px;
+            padding: 10px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+            background: #fff;
+            z-index: 100;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background: lightblue;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <ul class="boxes">
+        <li draggable='true'>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li class="add">+</li>
+    </ul>
+    <div class="delete-button">删除</div>
+</div>
+
+
+<script>
+    const lis = document.getElementsByTagName('li'),
+        ul = document.querySelector('.boxes'),
+        addBtn = lis[lis.length - 1],
+        deleBtn = document.querySelector('.delete-button'),
+        container = document.querySelector('.container');
+
+    // 给按钮添加新建事件
+    addBtn.addEventListener('click', () => {
+        let content = prompt('请填入信息：');
+        if (content) {
+            insertNewNode(content);
+        }
+    });
+
+    // 给document增加事件，取消delete的显示
+    document.addEventListener('mousedown', (event) => {
+        let deles = document.querySelectorAll('.delete-button'),
+            ev = event || window.event,
+            btn = event.button;
+
+        if(ev.target !== deleBtn && btn === 0){
+            deleBtn.style.display = 'none';
+        }
+
+        if (btn === 2 && ev.target.nodeName !== 'LI') {
+            deleBtn.style.display = 'none';
+        }
+    });
+
+    for (let i of lis) {
+        attachAttr(i);
+    }
+
+    //-------------------------------------------------------------
+
+    // 插入节点
+    function insertNewNode(content) {
+        let newLi = document.createElement('li');
+        newLi.innerText = content;
+        // 给增加的元素赋予特性
+        attachAttr(newLi);
+        ul.insertBefore(newLi, addBtn);
+    }
+
+    // 删除节点
+    function deleteNode(node) {
+        ul.removeChild(node);
+    }
+
+    // 显示删除按钮，第二个参数为要删除的节点，并且增加删除事件，删除传入的节点
+    function showDeleButton(event, node) {
+        deleBtn.style.display = 'block';
+        deleBtn.style.top = event.clientY + 'px';
+        deleBtn.style.left = event.clientX + 'px';
+
+        deleBtn.onclick = function (event) {
+            ul.removeChild(node);
+            this.style.display = 'none';
+        }
+    }
+
+    // 给节点增加特性
+    function attachAttr(node){
+        let dragAttr = document.createAttribute('draggable'),
+            offsetX = 0,
+            offsetY = 0;
+
+        // 拖动和禁止右键点击弹出菜单
+        dragAttr.value ='true';
+        node.setAttributeNode(dragAttr);
+        node.oncontextmenu = () => false;
+
+        // 显示删除按钮的事件
+        node !== addBtn && node.addEventListener('mousedown', function (event) {
+            let ev = event || window.event,
+                btn = event.button;
+            btn === 2 && showDeleButton(ev, this);
+        });
+
+        // 拖拽开始时传递数据
+        node !== addBtn && node.addEventListener('dragstart', function (event) {
+            let ev = event || window.event,
+                idAttr = document.createAttribute('id');
+            idAttr.value = 'temp';
+            ev.target.setAttributeNode(idAttr);
+            ev.dataTransfer.setData('text/plain',ev.target.id);
+        });
+
+        // 释放鼠标后传递数据并改变位置
+        node !== addBtn && node.addEventListener('drop', function (event) {
+            let ev = event || window.event;
+            let id = ev.dataTransfer.getData('text/plain'),
+                ele = document.getElementById(id);
+            ul.insertBefore(ele,ev.target);
+            // 传递来之后删除临时的id
+            ele.removeAttribute('id');
+            // 在火狐浏览器中，拖拽事件冒泡到document上时会打开新的页面
+            ev.stopPropagation();
+            ev.preventDefault();
+        });
+
+        // 改变放置行为
+        node !== addBtn && node.addEventListener('dragover', function (event) {
+            let ev = event || window.event;
+            // 默认的行为是拒绝被放置
+            ev.preventDefault();
+        });
+    }
+</script>
+
+</body>
+</html>
